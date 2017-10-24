@@ -48,34 +48,34 @@ public class SearchTRECtopics {
 	public static void main(String args[]) throws ParseException, IOException
 	{	
 		String fileAsString = null;
-	    try {
-	    	//read the file and saving into a string
-	    InputStream is = new FileInputStream("topics.51-100"); 
-	    	BufferedReader buf = new BufferedReader(new InputStreamReader(is)); 
-	    	String line = buf.readLine(); 
-	    	StringBuilder sb = new StringBuilder();
-	    	while(line != null)
-	    	{ 
-	    		sb.append(line);
-	    		sb.append(" ");
-	    		line = buf.readLine();
-	    	}
-	    	fileAsString = sb.toString();
-	    } 
+	    	try {
+	    		//read the file and saving into a string
+	   		InputStream is = new FileInputStream("topics.51-100"); 
+	    		BufferedReader buf = new BufferedReader(new InputStreamReader(is)); 
+	    		String line = buf.readLine(); 
+	    		StringBuilder sb = new StringBuilder();
+	    		while(line != null)
+	    		{ 
+	    			sb.append(line);
+	    			sb.append(" ");
+	    			line = buf.readLine();
+	    		}
+	    		fileAsString = sb.toString();
+	    	} 
 	    catch (IOException e) {
 	    }
-	    String[] array=fileAsString.split("<top>");
-	    forshortorlongquery(array,0);
-	    System.out.println("done with short query");
-	    forshortorlongquery(array,1);
-	    System.out.println("done with long query");
+	    	String[] array=fileAsString.split("<top>");
+	    	forshortorlongquery(array,0);
+	    	System.out.println("done with short query");
+	    	forshortorlongquery(array,1);
+	    	System.out.println("done with long query");
 	}
 	    
 	public static void forshortorlongquery(String[] array,int flag) throws IOException, ParseException
 	{
 		//for short query
-	    if(flag==0)
-	    {
+	    	if(flag==0)
+	    	{
 	    		File f = new File("ShortQuery.txt");
 	    		FileOutputStream fos = new FileOutputStream(f);
 	    		PrintWriter pw = new PrintWriter(fos);
@@ -112,16 +112,16 @@ public class SearchTRECtopics {
 	    				for (Object e : a) 
 	    				{
 	    					pw.write((namepass1[1]+"\t"+"Q"+(j-1)+" \t"+ ((Map.Entry<String, Float>) e).getKey() + "\t"+rank +"\t"+ ((Map.Entry<String, Float >) e).getValue())+"\t"+"run-"+j+"\n");
-	    				    rank++;
-	    				    if(rank>1000) {
-    				    		break;
-    				    }
+	    				    	rank++;
+	    				    	if(rank>1000) {
+    				    			break;
+    				   		 }
 	    				}
 	    			}
 	    		}
 	    		pw.flush();
-		    fos.close();
-		    pw.close();
+		    	fos.close();
+		    	pw.close();
 	    }
 	    //for long query
 	    else
@@ -162,16 +162,16 @@ public class SearchTRECtopics {
     				for (Object e : a) 
     				{
     					pw.write((namepass1[1]+"\t"+"Q"+(j-1)+"\t"+ ((Map.Entry<String, Float>) e).getKey() + "\t"+rank +"\t"+ ((Map.Entry<String, Float >) e).getValue())+"\t"+"run-"+j+"\n");
-    				    rank++;
-    				    if(rank>1000) {
+    				    	rank++;
+    				    	if(rank>1000) {
 				    		break;
-				    }
+				    	}
     				}
     			}
     		}
     		pw.flush();
-	    fos.close();
-	    pw.close();
+	    	fos.close();
+	    	pw.close();
 	    }
 	}	
 
@@ -209,13 +209,13 @@ public class SearchTRECtopics {
 				for (Term t : queryTerms)
 				{
 					float sum=0;
-				    //k(t)
-				    int df=reader.docFreq(new Term("TEXT", t.text()));
-				    //if not in that document is query term..next term
-				    if (df == 0) 
-				    {
-				      continue;
-				    }
+				    	//k(t)
+				    	int df=reader.docFreq(new Term("TEXT", t.text()));
+				    	//if not in that document is query term..next term
+				    	if (df == 0) 
+				    	{
+				     		continue;
+				   	 }
 				PostingsEnum de = MultiFields.getTermDocsEnum(leafContext.reader(),"TEXT", new BytesRef(t.text()));
 				if (de != null) 
 				{
@@ -229,15 +229,15 @@ public class SearchTRECtopics {
 							sum=(float) ((de.freq())/(doc_length).get(doc_id)*Math.log(1+(float)(totalno_docs/df)));
 						}
 						if(score.keySet().contains(doc_id) )
-				        {    
+				        	{    
 				        		//if already present in score hashmap then add in score  
-				            score.put(doc_id, score.get(doc_id)+sum);
-				        }
-				       	else 
-				       	{
-				            	//create a new tuple with new score
-				            	score.put(doc_id, sum);
-				       	}
+				            		score.put(doc_id, score.get(doc_id)+sum);
+				        	}
+				       		else 
+				       		{
+				            		//create a new tuple with new score
+				            		score.put(doc_id, sum);
+				      	 	}
 						
 					}
 				}
