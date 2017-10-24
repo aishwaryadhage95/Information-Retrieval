@@ -39,8 +39,8 @@ public class easySearch {
 		Analyzer analyzer = new StandardAnalyzer();
 		QueryParser parser = new QueryParser("TEXT", analyzer);
 		Scanner ss = new Scanner(System.in);
-	    System.out.print("Enter query: ");
-	    String s = ss.nextLine(); 
+	    	System.out.print("Enter query: ");
+	    	String s = ss.nextLine(); 
 		Query query = parser.parse(s);
 		Set<Term> queryTerms = new LinkedHashSet<Term>();
 		searcher.createNormalizedWeight(query, false).extractTerms(queryTerms);
@@ -48,22 +48,22 @@ public class easySearch {
 		for (Term t : queryTerms)
 		{
 			float sum=0;
-		    File f = new File("score"+t+".txt");
+			File f = new File("score"+t+".txt");
     			FileOutputStream fos = new FileOutputStream(f);
     			PrintWriter out1 = new PrintWriter(fos);
-		    //k(t)
-		    int df=reader.docFreq(new Term("TEXT", t.text()));
-		    //if not in that document is query term..next term
-		    if (df == 0) 
-		    {
-		      continue;
-		    }
-		    //N
-		    int totalno_docs=reader.maxDoc();
-		    ClassicSimilarity dSimi = new ClassicSimilarity();
-		    List<LeafReaderContext> leafContexts = reader.getContext().reader().leaves();
-			for (int i = 0; i < leafContexts.size(); i++)
-			{
+		    	//k(t)
+		    	int df=reader.docFreq(new Term("TEXT", t.text()));
+		    	//if not in that document is query term..next term
+		    	if (df == 0) 
+		    	{
+		      	continue;
+		    	}
+		    	//N
+		    	int totalno_docs=reader.maxDoc();
+		    	ClassicSimilarity dSimi = new ClassicSimilarity();
+		   	List<LeafReaderContext> leafContexts = reader.getContext().reader().leaves();
+		    	for (int i = 0; i < leafContexts.size(); i++)
+		    	{
 				LeafReaderContext leafContext = leafContexts.get(i);
 				int startDocNo = leafContext.docBase;
 				int numberOfDoc = leafContext.reader().maxDoc();
@@ -86,26 +86,26 @@ public class easySearch {
 						{
 							//calculate tf idf
 							sum=(float) ((de.freq())/(doc_length).get(doc_id)*Math.log(1+(float)(totalno_docs/df)));
-			            		//for each query term put in file relevance score
+			            			//for each query term put in file relevance score
 							out1.write("for term- "+t+"\tdoc id- "+doc_id+"\trelevance score is- " +sum+"\n");
 						}
 						if(score.keySet().contains(doc_id))
-				        {    
+				        	{    
 				        		//if already present in score hashmap then add in score  
-				            score.put(doc_id, score.get(doc_id)+sum);
-				        }
-				       	else
-				       	{
-				            	//create a new tuple with new score
-				            	score.put(doc_id, sum);
-				       	}
+				            		score.put(doc_id, score.get(doc_id)+sum);
+				        	}
+				       		else
+				       		{
+				            		//create a new tuple with new score
+				            		score.put(doc_id, sum);
+				       		}
 						
 					}
 				}
 			}
 			out1.flush();
-		    out1.close();
-		    out1.close();
+		   	out1.close();
+		    	out1.close();
 		}
 			
 		//store in a file the relevance score for query
@@ -117,8 +117,8 @@ public class easySearch {
 			out.write(key+"\t"+score.get(key)+"\n");
 		}
 		out.flush();
-	    out.close();
-	    out.close();	
+	    	out.close();
+	    	out.close();	
 	}			
 }
 
