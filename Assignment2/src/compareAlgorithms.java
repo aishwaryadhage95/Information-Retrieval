@@ -101,7 +101,8 @@ public class compareAlgorithms {
     					String namepass[] = tag_value.split(":"); 
     					//send to calculate relevance score
     					// Get the preprocessed query terms
-    					searcher.setSimilarity(new ClassicSimilarity());
+					//use models to calculate relevance score.
+    					searcher.setSimilarity(new ClassicSimilarity());//BM25Similarity() , DirichletSimilarity() , JelinekMercerSimilarity((float)0.7).
     					Analyzer analyzer = new StandardAnalyzer();
     					QueryParser parser = new QueryParser("TEXT", analyzer);
     					Query query = parser.parse(QueryParser.escape(namepass[1]));
@@ -147,7 +148,8 @@ public class compareAlgorithms {
 	    				String tag_value = matcher.group(1);//taking only group 1
 	    				String namepass[] = tag_value.split(":");
 	    				// Get the preprocessed query terms
-	    				searcher.setSimilarity(new ClassicSimilarity());
+					//use models to calculate relevance score.
+	    				searcher.setSimilarity(new ClassicSimilarity());//BM25Similarity() , DirichletSimilarity() , JelinekMercerSimilarity((float)0.7).
 	    				Analyzer analyzer = new StandardAnalyzer();
 	    				QueryParser parser = new QueryParser("TEXT", analyzer);
 	    				Query query = parser.parse(QueryParser.escape(namepass[1]));
